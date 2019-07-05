@@ -1,2 +1,121 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<nav class="mainmenu">
+    <div class="container">
+        <div class="dropdown">
+            <button type="button" class="navbar-toggle" data-toggle="dropdown"><span class="icon-bar"></span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span></button>
+            <!-- <a data-toggle="dropdown" href="#">Dropdown trigger</a> -->
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <li><a href="#head" class="active">Hello</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#themes">Subscr with tel</a></li>
+                <li><a href="#contact">Subscr with email</a></li>
+                <li style="display: none" class="g-signin2" data-onsuccess="onSignIn"></li>
+                <!--<li><a href="#themes">Themes</a></li>-->
+                <!--<li><a href="#contact">Get in touch</a></li>-->
+                <li><a onClick=signOut()>Log out</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Main (Home) section -->
+<section class="section" id="head">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1 text-center">
+
+                <h1 class="title">Ekadashi Fasting</h1>
+                <!--<h2 class="subtitle"></h2>-->
+
+                <!-- Short introductory (optional) -->
+                <h3 class="tagline">
+                    Ekadashi fasting is observed on every 11th Tithi in Hindu calendar.
+                </h3>
+                <button id="googleEnter" class="btn btn-default btn-lg" onClick=signIn()>Ener with Google</button>
+
+
+            </div> <!-- /col -->
+
+            <div class="input-group  col-xs-3 center-block">
+
+
+            </div><!-- /input-group -->
+
+        </div> <!-- /row -->
+
+    </div>
+</section>
+
+<!-- Second (About) section -->
+<section class="section" id="about">
+    <div class="container">
+
+        <h2 class="text-center title">About</h2>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-2">
+                <h5><strong><br></strong></h5>
+                <p>Ekadashi fasting is observed on every 11th Tithi in Hindu calendar. There are two Ekadashi fasting in
+                    a month, one during Shukla Paksha and another during Krishna Paksha. </p>
+            </div>
+            <div class="col-sm-4">
+                <h5><strong><br></strong></h5>
+                <p>Devotees of Lord Vishnu observe Ekadashi fasting to seek His blessings. Ekadashi fasting spans for
+                    three days.
+                    Devotees take single
+                    meal in the afternoon a day before
+                    fasting day to make sure there is no residual
+                    food in the stomach on next day. </p>
+                <!--<h5><strong>Author links<br></strong></h5>-->
+                <!--<p><a href="http://be.net/pozhilov9409">Behance</a> / <a href="https://twitter.com/serggg">Twitter</a> / <a href="http://linkedin.com/pozhilov">LinkedIn</a> / <a href="https://www.facebook.com/pozhilov">Facebook</a></p>-->
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <h5><strong><br></strong></h5>
+                <p>Devotees keep strict fast on Ekadashi day and break the fast on
+                    next day only after sunrise. Eating of all type of grains and cereals is prohibited during Ekadashi
+                    fasting.</p>
+            </div>
+            <div class="col-sm-4">
+                <h5><strong><br></strong></h5>
+                <p>Devotees can choose to observe fasting without water, with only water, with only fruits, with one
+                    time latex food according to their will and body power. However it should be decided before starting
+                    the fast.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Third (Works) section -->
+<section class="section" id="themes">
+    <div class="container">
+
+        <h3 class="text-center title">Ekadashi Fasting</h3>
+        <p class="lead text-center">
+            enter you phone for subscribe...
+        </p>
+        <div  class="input-group">
+            <input id="phoneIDF" type="text" class="form-control">
+            <span class="input-group-btn"><button id="phoneIDB" class="btn btn-default" type="button">Go!</button></span>
+        </div>
+
+    </div>
+</section>
+
+<!-- Fourth (Contact) section -->
+<section class="section" id="contact">
+    <div class="container">
+
+        <h3 class="text-center title">Ekadashi Fasting</h3>
+        <p class="lead text-center">
+            enter you email for subscribe...
+        </p>
+        <div id="emailID" class="input-group">
+            <input id="emailIDF" type="text" class="form-control">
+            <span class="input-group-btn"><button id="emailIDB" class="btn btn-default" type="button">Go!</button></span></div>
+
+    </div>
+</section>
+
+<script src="/app.js"></script>
