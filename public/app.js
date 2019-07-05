@@ -14,7 +14,7 @@ console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
         },
         body: JSON.stringify({telField: telField.value})
     });
-    telField.value = `phone ${telField.value} added for subscribe`
+    telField.value = await res.json();
 });
 
 emailButton.addEventListener("click", async (event) => {
@@ -27,5 +27,5 @@ emailButton.addEventListener("click", async (event) => {
         },
         body: JSON.stringify({emailField: emailField.value})
     });
-    emailField.value = `email ${emailField.value} added for subscribe`
+    emailField.value = await res.json();
 });

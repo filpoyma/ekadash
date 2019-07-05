@@ -4,9 +4,11 @@ const User = require('../models/users');
 const Ekad = require('../models/ekadashi');
 const Phone = require('../models/phones');
 const Email = require('../models/emails');
+const accountSid = 'AC9b7a1db85e59accd8f533418a0c2c3b8';
+const authToken = '6ca6bdbdf3e3336eb449bfe346ae27d3';
+const client = require('twilio')(accountSid, authToken);
 
 const router = express.Router();
-
 
 
 router.get('/', (req, res) => {
@@ -25,7 +27,13 @@ router.post('/auth', async (req, res) => {
 });
 
 router.get('/sms', async (req, res) => {
-
+    client.messages
+        .create({
+            body: 'ekadashi',
+            from: '+12516629121',
+            to: '+79104013455'
+        })
+        .then(message => console.log(message.sid));
 });
 
 router.get('/setinterval', async (req, res) => {
@@ -41,16 +49,26 @@ router.post('/tel', async (req, res) => {
         number: req.body.telField,
     });
     await ekad.save();
-    res.end();
+
+    client.messages
+        .create({
+            body: 'you subsrubed to ekadash',
+            from: '+12516629121',
+            to: req.body.telField
+        })
+        .then(message => console.log(message.sid));
+
+    res.json('phone ' + req.body.telField + ' subscribed');
 });
 
 router.post('/email', async (req, res) => {
     console.log(req.body);
-    const email = new Phone({
-        number: req.body.emailField,
-    });
-    await email.save();
-    res.end();
+    const email = new Email({email: req.body.emailField,});
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(req.body.emailField)) {
+        await email.save();
+        res.json('email ' + req.body.emailField + ' subscribed');
+    } else res.json('email is not valid')
 });
 
 
