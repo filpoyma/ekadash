@@ -10,6 +10,7 @@ const client = require('twilio')(accountSid, authToken);
 const moment = require('moment');
 const Ekad = require('./models/ekadashi.js');
 const Phones = require('./models/phones');
+const Emails = require('./models/emails');
 const tomorrowDate = moment(new Date()).add(1, 'days').format("YYYY-MM-DD");
 //const tomorrowDate = moment(new Date('2019-08-26')).format("YYYY-MM-DD");
 
@@ -24,6 +25,7 @@ setInterval(async function () {
 
     if (ekadashi.length !== 0) {
         const phones = Phones.find();
+        const emails = Emails.find();
         console.log('for each >>>>>>>>>>>>>>>>>>>>');
         phones.forEach((phone) => {
             setInterval(() => {
@@ -36,6 +38,23 @@ setInterval(async function () {
                     .then(message => console.log(message.sid));
             }, 5000); //send sms with delay
         });
+        emails.forEach((email) => {
+            setInterval(() => {
+                mandrill('/messages/send', {
+                    message: {
+                        to: [{email: email.email}],
+                        from_email: 'noreply@yourdomain.com',
+                        subject: _subject,
+                        text: ekadashi.name
+                    }
+                }, function(error, response){
+                    if (error) console.log( error );
+                    else console.log(response);
+                });
+            }, 5000); //send sms with delay
+        });
+
+
     }
 }, 50000); // check date on server every hour - 1000 * 3600
 

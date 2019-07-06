@@ -5,7 +5,6 @@ const emailButton = document.getElementById('emailIDB');
 
 telButton.addEventListener("click", async (event) => {
     let telField = document.getElementById('phoneIDF');
-console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
     let res = await fetch('/tel', {
         method: 'POST',
         headers: {

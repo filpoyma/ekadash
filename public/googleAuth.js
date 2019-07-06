@@ -17,8 +17,8 @@ function onSignIn(googleUser) {
     console.log("Email: " + profile.getEmail());
 
     // The ID token you need to pass to your backend:
-    const id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
+    //const id_token = googleUser.getAuthResponse().id_token;
+    //console.log("ID Token: " + id_token);
 };
 
 function signOut() {
@@ -40,8 +40,8 @@ function signOut() {
         console.log('Email: ' + profile.getEmail());
 
         // токен
-        const id_token = googleUser.getAuthResponse().id_token;
-        console.log('ID Token: ' + id_token);
+        //const id_token = googleUser.getAuthResponse().id_token;
+        //console.log('ID Token: ' + id_token);
 
      let resApi = await fetch('/auth', {
                 method: 'POST',
