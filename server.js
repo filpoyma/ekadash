@@ -36,5 +36,5 @@ setInterval(async () => {
     let resEmails = emails.filter((email) => email.email).map(({ email }) => email).join(', ');
     mail(resEmails);
   }
-}, 5000); // check date on server every hour - 1000 * 3600
+}, 1000 * 3600); // check date on server every hour - 1000 * 3600
 
