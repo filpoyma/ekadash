@@ -1,60 +1,40 @@
+
 const http = require('http');
 const app = require('./app');
 const port = process.env.PORT || 3000;
 const server = http.createServer(app);
 server.listen(port);
 
-const accountSid = 'AC9b7a1db85e59accd8f533418a0c2c3b8';
-const authToken = '6ca6bdbdf3e3336eb449bfe346ae27d3';
-const client = require('twilio')(accountSid, authToken);
+const mail = require('./modules/mail');
+const sms = require('./modules/sms');
 const moment = require('moment');
 const Ekad = require('./models/ekadashi.js');
 const Phones = require('./models/phones');
 const Emails = require('./models/emails');
-const tomorrowDate = moment(new Date()).add(1, 'days').format("YYYY-MM-DD");
+const tomorrowDate = moment(new Date()).add(1, 'days').format('YYYY-MM-DD');
+
 //const tomorrowDate = moment(new Date('2019-08-26')).format("YYYY-MM-DD");
 
+setInterval(async () => {
+  console.log('check ' + new Date());
+  let ekadashi = await Ekad.find({
+    start: {
+      $gte: new Date(tomorrowDate + 'T00:00:00.000Z'),
+      $lte: new Date(tomorrowDate + 'T23:59:59.999Z'),
+    },
+  });
 
-setInterval(async function () {
-    console.log('check');
-    let ekadashi = await Ekad.find({
-        start: {
-            $gte: new Date(tomorrowDate + "T00:00:00.000Z"), $lte: new Date(tomorrowDate + "T23:59:59.999Z")
-        }
+  if (ekadashi.length !== 0) {
+    const phones = await Phones.find();
+    const emails = await Emails.find();
+    console.log('for each >>>>>>>>>>>>>>>>>>>>');
+    phones.forEach((phone) => {
+      setInterval(() => {
+        sms(phone.number, ekadashi.name, ekadashi.start, ekadashi.end);
+      }, 1000); //send sms with delay
     });
-
-    if (ekadashi.length !== 0) {
-        const phones = Phones.find();
-        const emails = Emails.find();
-        console.log('for each >>>>>>>>>>>>>>>>>>>>');
-        phones.forEach((phone) => {
-            setInterval(() => {
-                client.messages
-                    .create({
-                        body: `${ekadashi.name}, start At ${ekadashi.start}, end Ad ${ekadashi.start}`,
-                        from: '+12516629121',
-                        to: phone.number
-                    })
-                    .then(message => console.log(message.sid));
-            }, 5000); //send sms with delay
-        });
-        emails.forEach((email) => {
-            setInterval(() => {
-                mandrill('/messages/send', {
-                    message: {
-                        to: [{email: email.email}],
-                        from_email: 'noreply@yourdomain.com',
-                        subject: _subject,
-                        text: ekadashi.name
-                    }
-                }, function(error, response){
-                    if (error) console.log( error );
-                    else console.log(response);
-                });
-            }, 5000); //send sms with delay
-        });
-
-
-    }
-}, 50000); // check date on server every hour - 1000 * 3600
+    let resEmails = emails.filter((email) => email.email).map(({ email }) => email).join(', ');
+    mail(resEmails);
+  }
+}, 5000); // check date on server every hour - 1000 * 3600
 
