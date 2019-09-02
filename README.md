@@ -3,7 +3,10 @@
 Соло проект.
 Время выполнения: 1 день.
 Используемые технологии: Node.js, Express, Bootstrap, Handlebars.js
-#Our Mission
-#Getting Started
+## Our Mission
+![screen1]()
+## Getting Started
+```
 npm install
 npm start
+```
