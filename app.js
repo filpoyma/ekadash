@@ -52,7 +52,9 @@ const indexRouter = require('./routes/index');
 
 // Подключаем mongoose.
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/ekadash', { useNewUrlParser: true });
+
+//mongoose.connect('mongodb://localhost:27017/ekadash', { useNewUrlParser: true });
+mongoose.connect(`mongodb+srv://rom:${process.env.DB_PASSW}@cluster0-woi64.mongodb.net/ekadash?retryWrites=true&w=majority`, { useNewUrlParser: true });
 
 // Подключаем статику
 app.use(express.static(path.join(__dirname, 'public')));
